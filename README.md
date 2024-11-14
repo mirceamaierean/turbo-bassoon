@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SimQuery
 
-## Getting Started
+**SimQuery** is a Next.js-based AI application for validating data about Romanian political history. It cross-references and verifies data points like historical events, political figures, and key dates, ensuring accuracy and reliability for research and educational purposes.
 
-First, run the development server:
+![SimQuery Snapshot](snapshot_14.11.2024.png)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Project Overview
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+SimQuery provides tools to validate data related to Romania’s political history, using AI to analyze and cross-reference input data with known historical records. Built with Next.js, SimQuery is optimized for fast, seamless interactions and accurate validation results.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Features
 
-To learn more about Next.js, take a look at the following resources:
+- **Historical Event Validation**: Verifies dates, events, and political figures in Romanian history.
+- **Cross-Referencing**: Cross-references data points with a verified historical database.
+- **Easy-to-Use Interface**: Built with Next.js for a smooth, responsive user experience.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Installation
 
-## Deploy on Vercel
+1. Clone the repository:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   ```bash
+   git clone https://github.com/yourusername/simquery.git
+   cd simquery
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Run the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+   Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+
+---
+
+## Usage
+
+To start using **SimQuery**, upload or enter data about Romanian political history for validation. Results will show validated data points and any discrepancies found.
+
+---
+
+## Contributing
+
+Feel free to submit issues or contribute with pull requests to improve **SimQuery**.
+
+---
+
+## License
+
+This project is licensed under the MIT License.
+
+---
+
+Enjoy using **SimQuery** to validate your historical data accurately and efficiently!
