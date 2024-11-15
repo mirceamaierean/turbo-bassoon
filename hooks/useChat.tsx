@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { Message } from "@/lib/types";
+import { Message, Sender } from "@/lib/types";
 import { INITIAL_CHAT_HISTORY } from "@/lib/constants";
 
 export function useChat() {
@@ -34,10 +34,10 @@ export function useChat() {
                 role: msg.sender === "user" ? "user" : "assistant",
                 content: msg.text,
               })),
-              { role: "user", content: userMessage },
+              { role: "user" as Sender, content: userMessage },
             ],
           }),
-        },
+        }
       );
 
       const data = await response.json();
@@ -46,7 +46,7 @@ export function useChat() {
         text:
           data.choices[0]?.message?.content ||
           "I'm sorry, I couldn't process that.",
-        sender: "ai",
+        sender: "ai" as Sender,
       };
 
       setConversation((prev) => [...prev, aiResponse]);
@@ -57,7 +57,7 @@ export function useChat() {
         {
           id: Date.now(),
           text: "Failed to get response from AI.",
-          sender: "ai",
+          sender: "ai" as Sender,
         },
       ]);
     }

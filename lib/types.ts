@@ -1,8 +1,8 @@
-// types.ts
+export type Sender = "user" | "ai";
 export interface Message {
   id: number;
   text: string;
-  sender?: "user" | "ai";
+  sender?: Sender;
 }
 
 export interface FeaturedQuestion {
