@@ -37,11 +37,11 @@ export function useChat() {
               { role: "user", content: userMessage },
             ],
           }),
-        }
+        },
       );
 
       const data = await response.json();
-      const aiResponse = {
+      const aiResponse: Message = {
         id: Date.now(),
         text:
           data.choices[0]?.message?.content ||
