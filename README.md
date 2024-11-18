@@ -24,11 +24,6 @@ SimQuery provides tools to validate data related to Romania’s political histor
 
 1. Clone the repository:
 
-   ```bash
-   git clone https://github.com/yourusername/simquery.git
-   cd simquery
-   ```
-
 2. Install dependencies:
 
    ```bash
