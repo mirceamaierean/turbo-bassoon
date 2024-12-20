@@ -22,7 +22,13 @@ SimQuery provides tools to validate data related to Romania’s political histor
 
 ## Installation
 
-1. Clone the repository:
+You can either use the deployed version of **SimQuery** or run it locally on your machine.
+
+The deployed version is currently available [here](https://turbo-bassoon-lime.vercel.app.vercel.app/).
+
+If you want to clone and run the project locally, follow these steps:
+
+1. Clone the repository: https://github.com/mirceamaierean/turbo-bassoon
 
 2. Install dependencies:
 
@@ -42,19 +48,9 @@ SimQuery provides tools to validate data related to Romania’s political histor
 
 ## Usage
 
-To start using **SimQuery**, upload or enter data about Romanian political history for validation. Results will show validated data points and any discrepancies found.
+To start using **SimQuery**, upload or enter data about Romanian political history for validation. Results will show validated data points and any discrepancies found. Any query you want will be processed and validated in real-time.
 
----
-
-## Contributing
-
-Feel free to submit issues or contribute with pull requests to improve **SimQuery**.
-
----
-
-## License
-
-This project is licensed under the MIT License.
+As an answer to your query, you will receive a list of validated data points, along with any discrepancies found. You can then use this information for research, educational purposes, or any other relevant context.
 
 ---
 

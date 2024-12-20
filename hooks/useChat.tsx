@@ -18,34 +18,21 @@ export function useChat() {
 
   const fetchAIResponse = async (userMessage: string) => {
     try {
-      const response = await fetch(
-        "https://api.openai.com/v1/chat/completions",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`,
-          },
-          body: JSON.stringify({
-            model: "gpt-3.5-turbo",
-            messages: [
-              { role: "system", content: "You are a helpful assistant." },
-              ...conversation.map((msg) => ({
-                role: msg.sender === "user" ? "user" : "assistant",
-                content: msg.text,
-              })),
-              { role: "user" as Sender, content: userMessage },
-            ],
-          }),
-        }
-      );
+      const response = await fetch("/api/model", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userMessage,
+          conversation,
+        }),
+      });
 
       const data = await response.json();
       const aiResponse: Message = {
         id: Date.now(),
-        text:
-          data.choices[0]?.message?.content ||
-          "I'm sorry, I couldn't process that.",
+        text: data.text,
         sender: "ai" as Sender,
       };
 
