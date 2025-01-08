@@ -5,6 +5,7 @@ import { Sidebar } from "@/components/Sidebar";
 import { ChatMessage } from "@/components/ChatMessage";
 import { ChatInput } from "@/components/ChatInput";
 import { FEATURED_QUESTIONS } from "@/lib/constants";
+import SignOutButton from "./SignOutButton";
 
 export function ChatInterface() {
   const {

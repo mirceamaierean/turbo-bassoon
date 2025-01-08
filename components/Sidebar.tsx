@@ -1,8 +1,12 @@
+"use client";
+
 import { MessageSquare, Plus, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Message } from "@/lib/types";
+import { Sign } from "crypto";
+import SignOutButton from "./SignOutButton";
 
 export function Sidebar({ chatHistory }: { chatHistory: Message[] }) {
   return (
@@ -46,6 +50,7 @@ export function Sidebar({ chatHistory }: { chatHistory: Message[] }) {
             <User className="h-4 w-4" />
             <span className="sr-only">User settings</span>
           </Button>
+          <SignOutButton />
         </div>
       </div>
     </div>
