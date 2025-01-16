@@ -1,22 +1,10 @@
-import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
-import { signin } from "@/actions/auth/actions";
-
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import {
-  CardHeader,
-  CardContent,
-  CardFooter,
-  Card,
-} from "@/components/ui/card";
-import { Eye, EyeOff } from "lucide-react";
+import { CardContent, Card } from "@/components/ui/card";
 import Image from "next/image";
 import logo from "../../public/images/logo_simquery.png";
-import { Checkbox } from "@/components/ui/checkbox";
 import { LoginForm } from "@/components/login-form";
+
 export default async function SignInPage() {
   const supabase = createClient();
   const { data } = await supabase.auth.getUser();

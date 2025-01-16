@@ -41,6 +41,7 @@ export default function Error({
   );
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function AlertCircleIcon(props: any) {
   return (
     <svg

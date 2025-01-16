@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
       {
         text: "Failed to get response from AI.",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -1,18 +1,5 @@
-import Link from "next/link";
-import { redirect } from "next/navigation";
 import Image from "next/image";
-import { createClient } from "@/utils/supabase/server";
-import { signup } from "@/actions/auth/actions";
-
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import {
-  CardHeader,
-  CardContent,
-  CardFooter,
-  Card,
-} from "@/components/ui/card";
+import { CardContent, Card } from "@/components/ui/card";
 import { SignUpForm } from "@/components/sign-up-form";
 import logo from "../../public/images/logo_simquery.png";
 

@@ -24,6 +24,7 @@ export function LoginForm() {
 
     try {
       await signin(formData); // Call the signin function
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setError(err.message); // Display error if sign-in fails
     }

@@ -24,6 +24,7 @@ export function SignUpForm() {
 
     try {
       await signup(formData); // Call the server-side signup function
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setError(err.message); // Handle errors
     }
