@@ -1,5 +1,8 @@
-import { ChatInterface } from "@/components/ChatInterface";
+import { v4 } from "uuid";
+import { redirect } from "next/navigation";
 
 export default async function Home() {
-  return <ChatInterface />;
+  const id = v4();
+
+  redirect(`/main-app/${id}`);
 }

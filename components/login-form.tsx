@@ -1,93 +1,65 @@
-"use client";
-
-import { useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { signin } from "@/actions/auth/actions";
 import Link from "next/link";
-
-export function LoginForm() {
-  const [showPassword, setShowPassword] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
-
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-    setError(null); // Reset error state
-
-    const formData = new FormData();
-    formData.set("email", email);
-    formData.set("password", password);
-
-    try {
-      await signin(formData); // Call the signin function
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (err: any) {
-      setError(err.message); // Display error if sign-in fails
-    }
-  };
-
+import { redirect } from "next/navigation";
+import { createClient } from "@/utils/supabase/server";
+import { signin } from "@/actions/auth/actions";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import {
+  CardHeader,
+  CardContent,
+  CardFooter,
+  Card,
+} from "@/components/ui/card";
+export default async function SignInPage() {
+  const supabase = createClient();
+  const { data } = await supabase.auth.getUser();
+  if (data?.user) {
+    redirect("/");
+  }
   return (
-    <form className="space-y-6" onSubmit={handleSubmit}>
-      <div className="space-y-2">
-        <h1 className="text-2xl font-semibold tracking-tight">Welcome</h1>
-        <p className="text-muted-foreground">Please log in</p>
-      </div>
-      <div className="space-y-4">
-        <div className="space-y-2">
-          <Label htmlFor="email">Email</Label>
-          <Input
-            id="email"
-            placeholder="What is your e-mail?"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)} // Update email state
-            required
-          />
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="password">Password</Label>
-          <div className="relative">
-            <Input
-              id="password"
-              placeholder="Enter your password"
-              type={showPassword ? "text" : "password"}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)} // Update password state
-              required
-            />
-            <Button
-              type="button"
-              variant="ghost"
-              size="icon"
-              className="absolute right-2 top-1/2 -translate-y-1/2"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? (
-                <EyeOff className="h-4 w-4" />
-              ) : (
-                <Eye className="h-4 w-4" />
-              )}
+    <main className="flex min-h-screen flex-col items-center justify-center">
+      <Card className="w-full max-w-md">
+        <CardHeader>
+          <div className="flex flex-col items-center space-y-2">
+            <h1 className="text-3xl font-bold">Welcome</h1>
+            <p className="text-gray-500 dark:text-gray-400">
+              Enter your email below to login to your account
+            </p>
+          </div>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          <form className="space-y-6">
+            <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                name="email"
+                placeholder="m@example.com"
+                required
+                type="email"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="password">Password</Label>
+              <Input id="password" name="password" required type="password" />
+            </div>
+            <Button formAction={signin} className="w-full">
+              Sign in
+            </Button>
+          </form>
+          <div className="space-y-4">
+            <Button className="w-full" variant="outline">
+              Sign in with Google
             </Button>
           </div>
-        </div>
-      </div>
-      <Button type="submit" className="w-full bg-gray-600 hover:bg-gray-700">
-        Continue
-      </Button>
-      <div className="text-center text-sm">
-        {"Don't have an account? "}
-        <Link
-          href="/signup"
-          className="text-primary underline-offset-4 hover:underline"
-        >
-          Sign up
-        </Link>
-      </div>
-      {error && <p className="text-red-500 text-sm">{error}</p>}
-    </form>
+        </CardContent>
+        <CardFooter className="flex flex-col space-y-2">
+          <Link className="text-sm underline" href="/signup">
+            Don&apos;t have an account? Sign up here
+          </Link>
+        </CardFooter>
+      </Card>
+    </main>
   );
 }

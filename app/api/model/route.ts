@@ -1,10 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  const { userMessage } = await req.json();
-
-  const startDate = "2014-05-01";
-  const endDate = "2024-10-01";
+  const { userMessage, startDate, endDate } = await req.json();
 
   try {
     const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + "/ask", {
