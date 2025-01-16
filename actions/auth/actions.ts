@@ -12,13 +12,14 @@ export async function signup(formData: FormData) {
     password: formData.get("password") as string,
     email_confirm: true,
   };
-
   const { error } = await supabase.auth.signUp(data);
 
   if (error) {
+    console.log(error);
+
     throw new Error(error.message);
   }
-  console.log("redirecting to sign in");
+  console.log("error");
   revalidatePath("/", "layout");
   redirect("/signin");
 }
@@ -32,8 +33,10 @@ export async function signin(formData: FormData) {
     email: formData.get("email") as string,
     password: formData.get("password") as string,
   };
-
-  const { error } = await supabase.auth.signInWithPassword(data);
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.signInWithPassword(data);
 
   if (error) {
     throw new Error(error.message);
