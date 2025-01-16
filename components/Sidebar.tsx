@@ -1,14 +1,20 @@
-"use client";
-
 import { MessageSquare, Plus, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Message } from "@/lib/types";
-import { Sign } from "crypto";
 import SignOutButton from "./SignOutButton";
+import { createClient } from "@/utils/supabase/client";
 
-export function Sidebar({ chatHistory }: { chatHistory: Message[] }) {
+export async function Sidebar({ chatHistory }: { chatHistory: Message[] }) {
+  const supabase = createClient();
+  const { data } = await supabase.auth.getUser();
+  // if (!data.user) {
+  //   console.log("redirecting to signin");
+  //   return;
+  // }
+  const user = data.user;
+  const email = user?.email;
   return (
     <div className="w-80 bg-[#1A181B] text-white p-4 flex flex-col">
       <div className="flex items-center gap-2 mb-4">
@@ -43,13 +49,9 @@ export function Sidebar({ chatHistory }: { chatHistory: Message[] }) {
             <AvatarFallback>MC</AvatarFallback>
           </Avatar>
           <div className="flex-grow">
-            <p className="text-sm font-medium">Mihai Costel</p>
-            <p className="text-xs text-gray-400">mihai@example.com</p>
+            <p className="text-sm font-medium">{email} </p>
+            <p className="text-xs text-gray-400"> </p>
           </div>
-          <Button variant="ghost" size="icon" className="rounded-full">
-            <User className="h-4 w-4" />
-            <span className="sr-only">User settings</span>
-          </Button>
           <SignOutButton />
         </div>
       </div>

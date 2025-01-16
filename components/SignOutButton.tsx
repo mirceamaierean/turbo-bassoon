@@ -2,7 +2,7 @@
 
 import { signout } from "@/actions/auth/actions";
 import { Button } from "@/components/ui/button";
-
+import { LogOutIcon, LogOut } from "lucide-react";
 export default function SignOutButton() {
   return (
     <Button
@@ -10,8 +10,10 @@ export default function SignOutButton() {
       onClick={async () => {
         await signout();
       }}
+      size="icon"
+      className="rounded-full"
     >
-      Sign Out
+      <LogOut className="h-4 w-4" />
     </Button>
   );
 }
