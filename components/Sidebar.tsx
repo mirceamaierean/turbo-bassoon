@@ -22,22 +22,23 @@ export async function Sidebar({ chatHistory }: { chatHistory: Message[] }) {
         <h1 className="text-xl font-bold">SimQuery</h1>
       </div>
 
-      <Button className="w-full mb-6 bg-[#498C8A] hover:bg-[#498C8A]/90">
-        <Plus className="w-4 h-4 mr-2" />
-        New chat
-      </Button>
+      <a href={`/main-app/new-chat`}>
+        <Button className="w-full mb-6 bg-[#498C8A] hover:bg-[#498C8A]/90">
+          <Plus className="w-4 h-4 mr-2" />
+          New chat
+        </Button>
+      </a>
 
       <div className="mb-4 flex-grow">
         <h2 className="text-sm text-gray-400 mb-2">Chat History</h2>
         <ScrollArea className="h-[calc(100vh-280px)]">
           {chatHistory.map((q) => (
-            <div
-              key={q.id}
-              className="flex items-center gap-2 p-2 rounded hover:bg-[#766C7F] cursor-pointer mb-1"
-            >
-              <MessageSquare className="w-4 h-4 text-gray-400" />
-              <span className="text-sm">{q.text}</span>
-            </div>
+            <a href={`/main-app/${q}`} key={q}>
+              <div className="flex items-center gap-2 p-2 rounded hover:bg-[#766C7F] cursor-pointer mb-1">
+                <MessageSquare className="w-4 h-4 text-gray-400" />
+                <span className="text-sm">{q}</span>
+              </div>
+            </a>
           ))}
         </ScrollArea>
       </div>

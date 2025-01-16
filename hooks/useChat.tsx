@@ -1,10 +1,9 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 import { Message } from "@/lib/types";
-import { INITIAL_CHAT_HISTORY } from "@/lib/constants";
 
 export function useChat() {
-  const [chatHistory, setChatHistory] = useState(INITIAL_CHAT_HISTORY);
+  const [chatHistory, setChatHistory] = useState<string[]>([]);
   const [conversation, setConversation] = useState<Message[]>([]);
   const [showConversation, setShowConversation] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
@@ -16,7 +15,33 @@ export function useChat() {
     }
   }, [conversation]);
 
-  const fetchSendUserMessage = async (message: Message) => {
+  const getUserConversations = async () => {
+    try {
+      const response = await fetch("/api/getConversationsByUserId/");
+      const data = await response.json();
+      //console.log(data);
+      return data;
+    } catch (error) {
+      console.error("Error fetching user conversations:", error);
+    }
+  }
+
+  const getConversationMessages = async (conversationId: string) => {
+    try {
+      const response = await fetch(`/api/getMessagesByConversationId?conversationId=${conversationId}`);
+      const data = await response.json();
+      if(data)
+      {
+        setConversation(data);
+        setShowConversation(true);
+      }
+      return data;
+    } catch (error) {
+      console.error("Error fetching conversation messages:", error);
+    }
+  }
+
+  const fetchSendUserMessage = async (message: Message, conversationId: string) => {
     try {
       const response = await fetch("/api/conversation", {
         method: "POST",
@@ -24,7 +49,8 @@ export function useChat() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          message
+          message,
+          conversationId
         }),
       });
 
@@ -35,7 +61,7 @@ export function useChat() {
     }
   }
 
-  const fetchAIResponse = async (userMessage: string) => {
+  const fetchAIResponse = async (userMessage: string, conversationId: string) => {
     try {
       const response = await fetch("/api/model", {
         method: "POST",
@@ -49,13 +75,19 @@ export function useChat() {
       });
 
       const data = await response.json();
-      setConversation((prev) => [...prev, data]);
+      if(conversation.length > 0)
+        setConversation((prev) => [...prev, data]);
+      else
+        setConversation([data])
+      await fetchSendUserMessage(data, conversationId);
     } catch (error) {
       console.error("Error fetching AI response:", error);
     }
   };
 
   return {
+    getUserConversations,
+    getConversationMessages,
     chatHistory,
     setChatHistory,
     conversation,
@@ -66,3 +98,4 @@ export function useChat() {
     fetchAIResponse,
   };
 }
+

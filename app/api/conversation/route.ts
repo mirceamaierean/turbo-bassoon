@@ -2,7 +2,9 @@ import { NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
 
 export async function POST(request: Request) {
-    const { message} = await request.json();
+    const { message, conversationId} = await request.json();
+    //console.log(message, conversationId);
+
     const supabase = createClient();
     const { data: dataUser } = await supabase.auth.getUser();
     const user = dataUser.user;
@@ -12,7 +14,7 @@ export async function POST(request: Request) {
     // Check if the conversation exists
     const { data: conversationData, error: fetchError } = await supabase
         .from("conversation")
-        .select("messages")
+        .select("message")
         .eq("id", conversationId)
         .single();
 
@@ -23,7 +25,7 @@ export async function POST(request: Request) {
             .insert({
                 id: conversationId,
                 user_id: user.id,
-                messages: [{ message}],
+                message: [{ question: message.question, urls: message.urls}],
                 created_at: new Date().toISOString(),
             })
             .single();
@@ -36,12 +38,12 @@ export async function POST(request: Request) {
     }
 
     // Append the new message to the existing messages array
-    const updatedMessages = [...conversationData.messages, message];
+    const updatedMessages = [...conversationData.message, message];
 
     // Update the conversation with the new messages array
     const { data, error } = await supabase
         .from("conversation")
-        .update({ messages: updatedMessages })
+        .update({ message: updatedMessages })
         .eq("id", conversationId)
         .single();
 
