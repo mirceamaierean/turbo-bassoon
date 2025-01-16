@@ -16,6 +16,25 @@ export function useChat() {
     }
   }, [conversation]);
 
+  const fetchSendUserMessage = async (message: Message) => {
+    try {
+      const response = await fetch("/api/conversation", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          message
+        }),
+      });
+
+      const data = await response.json();
+      setChatHistory((prev) => [...prev, data]);
+    } catch (error) {
+      console.error("Error sending user message:", error);
+    }
+  }
+
   const fetchAIResponse = async (userMessage: string) => {
     try {
       const response = await fetch("/api/model", {
