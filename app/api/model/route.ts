@@ -1,35 +1,27 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  const { userMessage, conversation } = await req.json();
+  const { userMessage } = await req.json();
+
+  const startDate = "2024-05-01";
+  const endDate = "2024-10-01";
 
   try {
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + "/ask", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`,
       },
       body: JSON.stringify({
-        model: "gpt-3.5-turbo",
-        messages: [
-          { role: "system", content: "You are a helpful assistant." },
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          ...conversation.map((msg: any) => ({
-            role: msg.sender === "user" ? "user" : "assistant",
-            content: msg.text,
-          })),
-          { role: "user", content: userMessage },
-        ],
+        question: userMessage,
+        start_date: startDate,
+        end_date: endDate,
       }),
     });
 
     const data = await response.json();
-    return NextResponse.json({
-      text:
-        data.choices[0]?.message?.content ||
-        "I'm sorry, I couldn't process that.",
-    });
+
+    return NextResponse.json(data);
   } catch (error) {
     console.error("Error fetching AI response:", error);
     return NextResponse.json(

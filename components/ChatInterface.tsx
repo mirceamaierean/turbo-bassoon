@@ -5,7 +5,6 @@ import { Sidebar } from "@/components/Sidebar";
 import { ChatMessage } from "@/components/ChatMessage";
 import { ChatInput } from "@/components/ChatInput";
 import { FEATURED_QUESTIONS } from "@/lib/constants";
-import SignOutButton from "./SignOutButton";
 
 export function ChatInterface() {
   const {
@@ -14,7 +13,6 @@ export function ChatInterface() {
     showConversation,
     chatContainerRef,
     fetchAIResponse,
-    setConversation,
     setShowConversation,
   } = useChat();
 
@@ -24,13 +22,6 @@ export function ChatInterface() {
     e.preventDefault();
     if (!inputValue.trim()) return;
 
-    const newMessage = {
-      id: Date.now(),
-      text: inputValue,
-      sender: "user" as const,
-    };
-    setConversation((prev) => [...prev, newMessage]);
-    setInputValue("");
     setShowConversation(true);
 
     await fetchAIResponse(inputValue);
@@ -61,8 +52,8 @@ export function ChatInterface() {
             </div>
           ) : (
             <div className="w-full max-w-2xl space-y-4 pt-8">
-              {conversation.map((message) => (
-                <ChatMessage key={message.id} message={message} />
+              {conversation.map((message, i) => (
+                <ChatMessage key={i} message={message} />
               ))}
             </div>
           )}

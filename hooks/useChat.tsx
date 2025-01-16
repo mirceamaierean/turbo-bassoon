@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { Message, Sender } from "@/lib/types";
+import { Message } from "@/lib/types";
 import { INITIAL_CHAT_HISTORY } from "@/lib/constants";
 
 export function useChat() {
@@ -30,23 +30,9 @@ export function useChat() {
       });
 
       const data = await response.json();
-      const aiResponse: Message = {
-        id: Date.now(),
-        text: data.text,
-        sender: "ai" as Sender,
-      };
-
-      setConversation((prev) => [...prev, aiResponse]);
+      setConversation((prev) => [...prev, data]);
     } catch (error) {
       console.error("Error fetching AI response:", error);
-      setConversation((prev) => [
-        ...prev,
-        {
-          id: Date.now(),
-          text: "Failed to get response from AI.",
-          sender: "ai" as Sender,
-        },
-      ]);
     }
   };
 
