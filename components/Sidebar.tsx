@@ -2,19 +2,18 @@ import { MessageSquare, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Message } from "@/lib/types";
 import SignOutButton from "./SignOutButton";
-import { createClient } from "@/utils/supabase/client";
+import Link from "next/link";
+import { v4 } from "uuid";
 
-export async function Sidebar({ chatHistory }: { chatHistory: Message[] }) {
-  const supabase = createClient();
-  const { data } = await supabase.auth.getUser();
-  // if (!data.user) {
-  //   console.log("redirecting to signin");
-  //   return;
-  // }
-  const user = data.user;
-  const email = user?.email;
+export default function Sidebar({
+  chatHistory,
+  userEmail,
+}: {
+  chatHistory: string[];
+  userEmail: string;
+}) {
+  const newChatId = v4();
   return (
     <div className="w-80 bg-[#1A181B] text-white p-4 flex flex-col">
       <div className="flex items-center gap-2 mb-4">
@@ -22,23 +21,25 @@ export async function Sidebar({ chatHistory }: { chatHistory: Message[] }) {
         <h1 className="text-xl font-bold">SimQuery</h1>
       </div>
 
-      <Button className="w-full mb-6 bg-[#498C8A] hover:bg-[#498C8A]/90">
-        <Plus className="w-4 h-4 mr-2" />
-        New chat
-      </Button>
+      <Link href={`/main-app/${newChatId}`}>
+        <Button className="w-full mb-6 bg-[#498C8A] hover:bg-[#498C8A]/90">
+          <Plus className="w-4 h-4 mr-2" />
+          New chat
+        </Button>
+      </Link>
 
       <div className="mb-4 flex-grow">
         <h2 className="text-sm text-gray-400 mb-2">Chat History</h2>
         <ScrollArea className="h-[calc(100vh-280px)]">
-          {chatHistory.map((q) => (
-            <div
-              key={q.id}
-              className="flex items-center gap-2 p-2 rounded hover:bg-[#766C7F] cursor-pointer mb-1"
-            >
-              <MessageSquare className="w-4 h-4 text-gray-400" />
-              <span className="text-sm">{q.text}</span>
-            </div>
-          ))}
+          {chatHistory.length > 0 &&
+            chatHistory.map((q) => (
+              <a href={`/main-app/${q}`} key={q}>
+                <div className="flex items-center gap-2 p-2 rounded hover:bg-[#766C7F] cursor-pointer mb-1">
+                  <MessageSquare className="w-4 h-4 text-gray-400" />
+                  <span className="text-sm">{q}</span>
+                </div>
+              </a>
+            ))}
         </ScrollArea>
       </div>
 
@@ -49,7 +50,7 @@ export async function Sidebar({ chatHistory }: { chatHistory: Message[] }) {
             <AvatarFallback>MC</AvatarFallback>
           </Avatar>
           <div className="flex-grow">
-            <p className="text-sm font-medium">{email} </p>
+            <p className="text-sm font-medium">{userEmail} </p>
             <p className="text-xs text-gray-400"> </p>
           </div>
           <SignOutButton />

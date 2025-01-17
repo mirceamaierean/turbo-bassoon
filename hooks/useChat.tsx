@@ -1,49 +1,78 @@
-"use client";
-import { useState, useEffect, useRef } from "react";
 import { Message } from "@/lib/types";
-import { INITIAL_CHAT_HISTORY } from "@/lib/constants";
 
-export function useChat() {
-  const [chatHistory, setChatHistory] = useState(INITIAL_CHAT_HISTORY);
-  const [conversation, setConversation] = useState<Message[]>([]);
-  const [showConversation, setShowConversation] = useState(false);
-  const chatContainerRef = useRef<HTMLDivElement>(null);
+export const getUserConversations = async (userId: string) => {
+  try {
+    const response = await fetch(
+      process.env.NEXT_PUBLIC_SELF_URL +
+        "/api/getConversationsByUserId?userId=" +
+        userId,
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching user conversations:", error);
+  }
+};
 
-  useEffect(() => {
-    if (chatContainerRef.current) {
-      chatContainerRef.current.scrollTop =
-        chatContainerRef.current.scrollHeight;
-    }
-  }, [conversation]);
+export const getConversationMessages = async (conversationId: string) => {
+  try {
+    const response = await fetch(
+      process.env.NEXT_PUBLIC_SELF_URL +
+        `/api/getMessagesByConversationId?conversationId=${conversationId}`,
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching conversation messages:", error);
+  }
+};
 
-  const fetchAIResponse = async (userMessage: string) => {
-    try {
-      const response = await fetch("/api/model", {
+export const fetchAIResponse = async (
+  userMessage: string,
+  startDate: string,
+  endDate: string,
+) => {
+  try {
+    const response = await fetch(
+      process.env.NEXT_PUBLIC_SELF_URL + "/api/model",
+      {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           userMessage,
-          conversation,
+          startDate,
+          endDate,
         }),
-      });
+      },
+    );
 
-      const data = await response.json();
-      setConversation((prev) => [...prev, data]);
-    } catch (error) {
-      console.error("Error fetching AI response:", error);
-    }
-  };
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching AI response:", error);
+  }
+};
 
-  return {
-    chatHistory,
-    setChatHistory,
-    conversation,
-    setConversation,
-    showConversation,
-    setShowConversation,
-    chatContainerRef,
-    fetchAIResponse,
-  };
-}
+export const fetchSendUserMessage = async (
+  message: Message,
+  conversationId: string,
+  userId: string,
+) => {
+  try {
+    await fetch(process.env.NEXT_PUBLIC_SELF_URL + "/api/conversation", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        message,
+        conversationId,
+        userId,
+      }),
+    });
+  } catch (error) {
+    console.error("Error sending user message:", error);
+  }
+};
