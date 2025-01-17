@@ -26,9 +26,10 @@ export default async function ChatInterface({ id }: { id: string }) {
   }
 
   return (
-    <div className="flex h-screen bg-[#EADEDA]">
+    <div className="flex h-screen bg-[#EADEDC]">
       <Sidebar
         chatHistory={chatHistory}
+        activeChat={id}
         userEmail={dataUser.user.email as string}
       />
       <MainChat id={id} msgs={messages} userId={dataUser.user.id} />

@@ -38,9 +38,9 @@ export default async function SignUpPage() {
         <Card className="w-full max-w-md">
           <CardHeader>
             <div className="flex flex-col items-center space-y-2">
-              <h1 className="text-3xl font-bold">Sign Up</h1>
+              <h1 className="text-3xl font-bold">Creați-vă un cont!</h1>
               <p className="text-gray-500 dark:text-gray-400">
-                Enter your email below to create a new account.
+                Completați datele pentru a vă crea un cont nou.
               </p>
             </div>
           </CardHeader>
@@ -57,17 +57,17 @@ export default async function SignUpPage() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="password">Parolă</Label>
                 <Input id="password" name="password" required type="password" />
               </div>
               <Button formAction={signup} className="w-full">
-                Sign Up
+                Creați cont
               </Button>
             </form>
           </CardContent>
           <CardFooter className="flex flex-col space-y-2">
             <Link className="text-sm underline" href="/signin">
-              Already have an account? Sign In
+              Aveți deja un cont? Conectați-vă
             </Link>
           </CardFooter>
         </Card>
