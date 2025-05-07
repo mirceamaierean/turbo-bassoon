@@ -32,7 +32,7 @@ export function useChat() {
       const data = await response.json();
       const aiResponse: Message = {
         id: Date.now(),
-        text: data.text,
+        text: data.response,
         sender: "ai" as Sender,
       };
 
