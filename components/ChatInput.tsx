@@ -17,7 +17,7 @@ export function ChatInput({
         <Input
           value={value}
           onChange={onChange}
-          placeholder="Is Galati part of Romania?"
+          placeholder="Type your question here..."
           className="w-full py-6 text-lg bg-white"
         />
         <Button

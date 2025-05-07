@@ -9,7 +9,7 @@ export function Sidebar({ chatHistory }: { chatHistory: Message[] }) {
     <div className="w-80 bg-[#1A181B] text-white p-4 flex flex-col">
       <div className="flex items-center gap-2 mb-4">
         <MessageSquare className="w-6 h-6" />
-        <h1 className="text-xl font-bold">SimQuery</h1>
+        <h1 className="text-xl font-bold">Newsito Informiro</h1>
       </div>
 
       <Button className="w-full mb-6 bg-[#498C8A] hover:bg-[#498C8A]/90">
